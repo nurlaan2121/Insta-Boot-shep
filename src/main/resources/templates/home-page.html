@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #fafafa;
+            border-right: 1px solid #dbdbdb;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu-item {
+            margin-bottom: 10px;
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: block;
+            padding: 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .menu-item a:hover {
+            background-color: #dbdbdb;
+        }
+
+        .content {
+            margin-left: 400px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Центрирование по горизонтали */
+        }
+
+        .post {
+            width: 600px; /* Ширина поста */
+            margin: 10px auto; /* Отступы по верху и низу 10px, по бокам автоматически */
+            padding: 10px; /* Внутренние отступы для поста */
+            background-color: #fff; /* Цвет фона поста */
+            border-radius: 8px; /* Закругление углов поста */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Тень для эффекта поднятия */
+            text-align: center; /* Центрируем содержимое по горизонтали */
+            margin-left: 20px; /* Добавляем отступ слева */
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid #dbdbdb;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #dbdbdb;
+            outline: none;
+        }
+
+
+        .search-results p {
+            margin-bottom: 5px;
+        }
+
+        .search-results img {
+            max-width: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post-content {
+            padding: 10px;
+        }
+
+        .post-content h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .post-content p {
+            margin-bottom: 10px;
+        }
+
+        .interaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .like-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            color: #333;
+        }
+
+        .like-btn i {
+            margin-right: 5px;
+        }
+
+        .comment-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .comment-link:hover {
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">Instagram</div>
+</header>
+
+<!-- Модальное окно для отображения результатов поиска -->
+
+<div class="container">
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li class="menu-item"><a href="#" th:href="@{/reg/main/{userId}(userId=${userId})}"><i class="fa fa-home"></i> Home</a></li>
+                <li class="menu-item"><a href="#" th:href="@{/search/createSearch/{userId}(userId=${userId})}"><i
+                        class="fa fa-search"></i> Search</a></li>
+                <li class="menu-item"><a href="#"><i class="fa fa-envelope"></i> Messages</a></li>
+                <li class="menu-item"><a href="#" th:href="@{/posts/newPost/{userId}(userId=${userId})}"><i
+                        class="fa fa-plus"></i> New POST</a>
+                </li>
+                <li class="menu-item"><a href="#" th:href="@{/home/profUser/{userId}(userId=${userId})}"><i
+                        class="fas fa-user"></i> Profile</a>
+                </li>
+                <li class="menu-item"><a href="#" th:href="@{/reg/page}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <main class="content">
+        <div class="posts">
+            <div class="post" th:each="post : ${allPosts}">
+                <img th:src="${post.image.imageURL}" alt="Post Image">
+                <div class="post-content">
+                    <h3 th:text="${post.title}"></h3>
+                    <p th:text="${post.description}"></p>
+                    <p th:text="${post.createAt}"></p>
+                    <div class="interaction">
+                        <form class="like-btn"
+                              th:action="@{/posts/likes/{userId}/{postId}(userId=${userId},postId=${post.getId()})}"
+                              onclick="toggleLike(this)" th:method="get">
+                            <button type="submit">
+                                <i class="far fa-heart"></i>
+                                <span class="like-count" th:text="${post.like.isLikes.size()}"></span>
+                            </button>
+                        </form>
+                        <a href="#"
+                           th:href="@{/posts/viewComment/{userId}/{postId}(userId=${userId},postId=${post.getId()})}"
+                           class="comment-link">View Comments</a></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer>
+    <p>&copy; <span id="currentYear"></span> Instagram</p>
+</footer>
+<script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    function toggleLike(button) {
+        var likeIcon = button.querySelector('i');
+        var likeCountSpan = button.querySelector('.like-count');
+
+        var likeCountValue = parseInt(likeCountSpan.textContent);
+        if (isNaN(likeCountValue)) {
+            likeCountValue = 0;
+        }
+
+        var isLiked = likeIcon.classList.contains('fas');
+
+        if (!isLiked) {
+            likeIcon.classList.remove('far');
+            likeIcon.classList.add('fas');
+            likeIcon.style.color = 'red';
+            likeCountSpan.textContent = likeCountValue + 1;
+        } else {
+            likeIcon.classList.remove('fas');
+            likeIcon.classList.add('far');
+            likeIcon.style.color = '';
+            likeCountSpan.textContent = likeCountValue - 1;
+        }
+    }
+
+</script>
+</body>
+</html>

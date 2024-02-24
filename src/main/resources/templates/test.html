@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .search-container {
+            text-align: center; /* Выравниваем содержимое по центру */
+            margin-top: 30px; /* Отступ сверху формы */
+            margin-left: 150px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block; /* Отображаем метку как блочный элемент */
+            margin-bottom: 5px; /* Отступ между меткой и полем ввода */
+        }
+
+        input[type="text"] {
+            width: 250px; /* Ширина поля ввода */
+            padding: 8px; /* Отступы внутри поля ввода */
+            margin-bottom: 10px; /* Отступ снизу поля ввода */
+            border-radius: 5px; /* Скругление углов поля ввода */
+            border: 1px solid #ccc; /* Граница поля ввода */
+        }
+
+        button[type="submit"] {
+            padding: 8px 16px; /* Отступы внутри кнопки */
+            border: none; /* Убираем границу кнопки */
+            border-radius: 5px; /* Скругление углов кнопки */
+            background-color: #007bff; /* Цвет фона кнопки */
+            color: #fff; /* Цвет текста на кнопке */
+            cursor: pointer; /* Указатель при наведении на кнопку */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
+        }
+
+
+
+
+
+        .edit-profile a {
+            text-decoration: none;
+            color: #0095f6;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-profile a:hover {
+            background-color: #dbdbdb;
+        }
+    </style>
+</head>
+<body>
+
+<form class="search-container" th:action="@{/search/mSearch/{userId}(userId=${userId})}" method="post">
+    <label for="keyword">Keyword:</label>
+    <input type="text" id="keyword" name="keyword" required>
+    <button type="submit">Search</button>
+</form>
+
+
+
+</body>
+
+
+</html>

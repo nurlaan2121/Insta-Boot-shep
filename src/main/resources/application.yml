@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        password: rootroot
+        url: jdbc:postgresql://localhost:5432/insta_boot
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
