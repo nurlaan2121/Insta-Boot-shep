@@ -170,6 +170,9 @@
         .stats {
             display: flex;
             margin-bottom: 10px;
+            a{
+                text-decoration: none;
+            }
         }
 
         .stats p {
@@ -402,10 +405,10 @@
                 <img th:src="${currentUser.getUserInfo().getImage()}" alt="Profile Picture">
                 <div>
                     <div class="profile-info">
-                        <a th:href="@{/search/otherUser/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}">
+                        <a th:href="@{/home/someUser/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}">
                             <h2 th:text="${currentUser.userName}"></h2></a>
                         <div class="edit-profile">
-                            <form th:action="@{/search/addSubscriber/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}" th:method="get">
+                            <form th:action="@{/home/subscriber/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}" th:method="get">
                                 <button type="submit" class="subscribe-btn">Subscribe</button>
                             </form>
                         </div>
