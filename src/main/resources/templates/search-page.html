@@ -170,6 +170,9 @@
         .stats {
             display: flex;
             margin-bottom: 10px;
+            a{
+                text-decoration: none;
+            }
         }
 
         .stats p {
@@ -338,8 +341,8 @@
         .search-container {
             text-align: center; /* Выравниваем содержимое по центру */
             margin-top: 30px; /* Отступ сверху формы */
-            margin-left: 150px;
-            margin-bottom: 20px;
+            margin-left: 60px;
+            margin-bottom: 60px;
         }
 
         label {
@@ -402,18 +405,18 @@
         </form>
 
         <!-- Профиль пользователя -->
-        <div class="userss" th:each="currentUser : ${users}">
-            <div class="user-profile">
+        <div class="userss">
+            <div class="user-profile" th:each="currentUser : ${users}">
                 <img th:src="${currentUser.getUserInfo().getImage()}" alt="Profile Picture">
                 <div>
                     <div class="profile-info">
-                        <a th:href="@{/search/otherUser/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}">
+                        <a th:href="@{/home/someUser/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}">
                             <h2 th:text="${currentUser.userName}"></h2></a>
-                        <div class="edit-profile">
-                            <form th:action="@{/search/addSubscriber/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}" th:method="get">
-                                <button type="submit" class="subscribe-btn">Subscribe</button>
-                            </form>
-                        </div>
+<!--                        <div class="edit-profile">-->
+<!--                            <form th:action="@{/search/addSubscriber/{userId}/{otherId}(userId=${userId},otherId=${currentUser.getId()})}" th:method="get">-->
+<!--                                <button type="submit" class="subscribe-btn">Subscribe</button>-->
+<!--                            </form>-->
+<!--                        </div>-->
                     </div>
                     <div class="stats">
                         <p> Posts: <span th:text="${currentUser.getPosts().size()}"></span></p>

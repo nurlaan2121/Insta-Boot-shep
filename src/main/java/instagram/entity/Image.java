@@ -27,6 +27,6 @@ public class Image{
     @OneToMany(cascade = {DETACH})
     private List<User> users = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     private Post post;
 }

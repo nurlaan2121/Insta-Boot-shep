@@ -1,5 +1,6 @@
 package instagram.service.serviceImpl;
 
+import instagram.entity.Image;
 import instagram.entity.Like;
 import instagram.entity.Post;
 import instagram.entity.User;
@@ -20,29 +21,41 @@ import java.util.NoSuchElementException;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
     @Override
-    public void createPost(Long userId, Post newPOst) throws MyException {
+    public void createPost(Long userId, Post newPost){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
-        if (newPOst.getImage() != null){
-            Like like = new Like();
-            newPOst.setLike(like);
-            user.getPosts().add(newPOst);
-            newPOst.setUser(user);
-            postRepository.save(newPOst);
-        }else {
-            throw new MyException();
+
+        Like like = new Like();
+        newPost.setLike(like);
+
+        // Проходимся по всем изображениям в новом посте
+        for (Image image : newPost.getImages()) {
+            // Связываем изображение с постом
+            image.setPost(newPost);
         }
+
+        // Добавляем новый пост к пользователю
+        user.getPosts().add(newPost);
+        newPost.setUser(user);
+
+        // Сохраняем пост в репозитории
+        postRepository.save(newPost);
     }
+
+
     @Override
     public Post findById(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new NoSuchElementException("Post not found"));
     }
+
     @Override
     public List<Post> findAllPosts() {
         return postRepository.findAll();
     }
+
     @Override
     public void updatePOst(Long postId, Post post) {
         Post findPost = findById(postId);
@@ -50,6 +63,7 @@ public class PostServiceImpl implements PostService {
         findPost.setDescription(post.getDescription());
         postRepository.save(findPost);
     }
+
     @Override
     public void deletePostById(Long postId) {
         postRepository.deleteById(postId);
@@ -62,9 +76,9 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new NoSuchElementException("Post not found"));
 
         List<Long> isLikes = post.getLike().getIsLikes();
-        if (isLikes.contains(currentUserId)){
+        if (isLikes.contains(currentUserId)) {
             isLikes.remove(currentUserId);
-        }else {
+        } else {
             isLikes.add(currentUserId);
         }
     }

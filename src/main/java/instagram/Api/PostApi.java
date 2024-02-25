@@ -8,10 +8,14 @@ import instagram.exception.MyException;
 import instagram.service.CommentService;
 import instagram.service.PostService;
 import instagram.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,26 +28,31 @@ public class PostApi {
     @GetMapping("/newPost/{userId}")
     public String createPost(@PathVariable Long userId, Model model) {
         model.addAttribute("post", new Post());
-        model.addAttribute("image", new Image());
         model.addAttribute("userId", userId);
         return "new-post";
     }
 
     @PostMapping("/savePost/{userId}")
     public String savePost(@ModelAttribute("post") Post post,
-                           @ModelAttribute("image") Image image,
                            @PathVariable Long userId,
-                           Model model) {
-        try {
-            post.setImage(image);
-            image.setPost(post);
-            postService.createPost(userId,post);
-        } catch (MyException e) {
-            model.addAttribute("errorMessage", "New Post cannot be without Image");
-            return "error-page";
+                           HttpServletRequest request) {
+        // Получаем значения URL изображений из запроса
+        String[] imageURLs = request.getParameterValues("additionalImageUrls");
+
+        // Добавляем URL изображений к посту
+        if (imageURLs != null) {
+            for (String imageURL : imageURLs) {
+                Image image = new Image();
+                image.setImageURL(imageURL);
+                post.getImages().add(image);
+            }
         }
+
+        // Продолжаем сохранение поста и т.д.
+        postService.createPost(userId, post);
         return "redirect:/home/profUser/" + userId;
     }
+
 
     @GetMapping("/viewComment/{userId}/{postId}")
     public String viewComment(Model model, @PathVariable Long postId,
@@ -59,9 +68,9 @@ public class PostApi {
     @GetMapping("/comLike/{userId}/{postId}/{comId}")
     public String commentLike(@PathVariable Long userId,
                               @PathVariable Long postId,
-                              @PathVariable Long comId){
+                              @PathVariable Long comId) {
         commentService.getCommentLike(userId, comId);
-        return "redirect:/posts/viewComment/"+ userId +"/"+ postId;
+        return "redirect:/posts/viewComment/" + userId + "/" + postId;
     }
 
     @PostMapping("/savedComment/{userId}/{postId}")
@@ -71,7 +80,7 @@ public class PostApi {
                                Model model) {
         model.addAttribute("postId", postId);
         commentService.saveComment(userId, postId, comment);
-        return "redirect:/posts/viewComment/"+ userId +"/"+ postId;
+        return "redirect:/posts/viewComment/" + userId + "/" + postId;
     }
 
     @GetMapping("/editPost/{userId}/{postId}")
@@ -102,14 +111,14 @@ public class PostApi {
     @GetMapping("/deleteComment/{userId}/{postId}/{comId}")
     public String deleteComment(@PathVariable Long comId,
                                 @PathVariable Long userId,
-                                @PathVariable Long postId){
+                                @PathVariable Long postId) {
         commentService.deleteComment(comId);
-        return "redirect:/posts/viewComment/" + userId +"/"+ postId;
+        return "redirect:/posts/viewComment/" + userId + "/" + postId;
     }
 
     @GetMapping("/likes/{userId}/{postId}")
     public String isLike(@PathVariable Long postId,
-                         @PathVariable Long userId){
+                         @PathVariable Long userId) {
         postService.getLikePost(userId, postId);
         return "redirect:/reg/main/" + userId;
     }

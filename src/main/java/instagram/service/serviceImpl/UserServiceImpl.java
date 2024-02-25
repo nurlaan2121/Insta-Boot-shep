@@ -39,16 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUserByUserName(Long userId, String keyword) throws MyException {
-        List<User> users = userRepository.searchUsers("%" + keyword + "%");
-        User findUser = findById(userId);
-        for (User user : users) {
-            if (user.getUserName().equalsIgnoreCase(findUser.getUserName())) {
-                throw new MyException();
-
-            }
-        }
-        return users;
+    public List<User> findUserByUserName(Long userId, String keyword) {
+        return userRepository.searchUsers("%" + keyword + "%");
     }
     @Override
     public void updateUser(Long id, User user) {

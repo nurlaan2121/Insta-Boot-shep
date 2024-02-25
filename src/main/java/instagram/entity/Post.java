@@ -30,8 +30,8 @@ public class Post {
     @ManyToOne(cascade = {DETACH})
     private User user;
 
-    @OneToOne(mappedBy = "post", cascade = {PERSIST, MERGE, REFRESH, REMOVE})
-    private Image image;
+    @OneToMany(mappedBy = "post", cascade = {PERSIST, MERGE, REFRESH, REMOVE})
+    private List<Image> images = new ArrayList<>();
 
     @OneToOne(cascade = {REMOVE, PERSIST, MERGE})
     private Like like;

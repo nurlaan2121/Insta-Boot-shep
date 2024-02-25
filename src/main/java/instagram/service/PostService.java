@@ -1,12 +1,13 @@
 package instagram.service;
 
+import instagram.entity.Image;
 import instagram.entity.Post;
 import instagram.exception.MyException;
 
 import java.util.List;
 
 public interface PostService {
-    void createPost(Long userId, Post newPOst) throws MyException;
+    void createPost(Long userId, Post newPOst);
 
     Post findById(Long postId);
 

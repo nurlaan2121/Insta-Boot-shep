@@ -1,5 +1,6 @@
 package instagram.Api;
 
+import instagram.entity.Image;
 import instagram.entity.Post;
 import instagram.entity.User;
 import instagram.exception.MyException;
@@ -96,7 +97,11 @@ public class MainApi {
            User otherUser = userService.findOtherUserById(userId, subId);
            List<Post> posts = otherUser.getPosts();
            Collections.reverse(posts);
+           int subscriptions = followerService.getNumberOfSubscriptions(subId);
+           int subscribers = followerService.getNumberOfSubscribers(subId);
            model.addAttribute("posts", posts);
+           model.addAttribute("subscriptions", subscriptions);
+           model.addAttribute("subscribers", subscribers);
            model.addAttribute("currentUser", otherUser);
            model.addAttribute("userId", userId);
            return "other-page";
