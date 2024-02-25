@@ -395,11 +395,6 @@
     </div>
 
     <div class="content">
-        <form class="search-container" th:action="@{/search/mSearch/{userId}(userId=${userId})}" method="post">
-            <label for="keyword">Keyword:</label>
-            <input type="text" id="keyword" name="keyword" required>
-            <button type="submit">Search</button>
-        </form>
 
         <!-- Профиль пользователя -->
         <div class="userss" th:each="currentUser : ${users}">
@@ -417,9 +412,9 @@
                     </div>
                     <div class="stats">
                         <p> Posts: <span th:text="${currentUser.getPosts().size()}"></span></p>
-                        <p><a href="#"> Followers: <span
+                        <p><a href="#" th:href="@{/home/subscribers/{userId}(userId=${userId})}"> Followers: <span
                                 th:text="${currentUser.getFollower().getSubscribers().size()}"></span></a></p>
-                        <P><a href="#"> Following: <span
+                        <P><a href="#" th:href="@{/home/subscriptions/{userId}(userId=${userId})}"> Following: <span
                                 th:text="${currentUser.getFollower().getSubscriptions().size()}"></span></a></P>
                     </div>
                     <p th:text="${currentUser.userInfo.fullName}"></p>
@@ -461,25 +456,25 @@
         }
     }
 
-     document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         var form = document.getElementById('subscriptionForm');
         var button = document.getElementById('subscribeButton');
         var subscribed = false;
 
         form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Предотвращаем отправку формы, чтобы избежать перезагрузки страницы
-        // В этом месте можно добавить дополнительную логику, если это необходимо, например, отправка AJAX-запроса на сервер
-        subscribed = !subscribed;
-        updateButtonLabel();
-    });
+            event.preventDefault(); // Предотвращаем отправку формы, чтобы избежать перезагрузки страницы
+            // В этом месте можно добавить дополнительную логику, если это необходимо, например, отправка AJAX-запроса на сервер
+            subscribed = !subscribed;
+            updateButtonLabel();
+        });
 
         function updateButtonLabel() {
-        if (subscribed) {
-        button.textContent = 'Unsubscribe';
-    } else {
-        button.textContent = 'Subscribe';
-    }
-    }
+            if (subscribed) {
+                button.textContent = 'Unsubscribe';
+            } else {
+                button.textContent = 'Subscribe';
+            }
+        }
     });
 </script>
 </body>

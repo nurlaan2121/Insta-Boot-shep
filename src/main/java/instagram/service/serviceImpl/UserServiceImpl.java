@@ -77,4 +77,28 @@ public class UserServiceImpl implements UserService {
             userRepository.deleteById(userId);
         }else throw new MyException();
     }
+
+    @Override
+    public List<User> subscriptionsOfUser(Long userId) {
+        User foundUser = findById(userId);
+        List<Long> subscriptions = foundUser.getFollower().getSubscriptions();
+        return userRepository.subscriptionsOfUser(subscriptions);
+    }
+
+    @Override
+    public List<User> subscribersOfUser(Long userId) {
+        User foundUser = findById(userId);
+        List<Long> subscribers = foundUser.getFollower().getSubscribers();
+        return userRepository.subscriptionsOfUser(subscribers);
+    }
+
+    @Override
+    public User findOtherUserById(Long userId, Long subId) throws MyException {
+        User currentUser = findById(userId);
+        User foundUser = findById(subId);
+        if (!foundUser.getUserName().equalsIgnoreCase(currentUser.getUserName())){
+            return foundUser;
+        }
+        throw new MyException();
+    }
 }

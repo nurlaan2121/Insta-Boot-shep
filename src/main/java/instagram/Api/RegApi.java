@@ -3,6 +3,7 @@ package instagram.Api;
 import instagram.entity.Post;
 import instagram.entity.User;
 import instagram.exception.MyException;
+import instagram.service.FollowerService;
 import instagram.service.PostService;
 import instagram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,6 @@ import java.util.List;
 @RequestMapping("/reg")
 @RequiredArgsConstructor
 public class RegApi {
-
     private final UserService userService;
     private final PostService postService;
 
@@ -40,10 +40,12 @@ public class RegApi {
     }
     @GetMapping("/main/{userId}")
     private String checkingSome(Model model, @PathVariable Long userId){
+        List<User> users = userService.subscriptionsOfUser(userId);
         List<Post> allPosts = postService.findAllPosts();
         Collections.reverse(allPosts);
         model.addAttribute("allPosts", allPosts);
         model.addAttribute("userId", userId);
+        model.addAttribute("subscriptions", users);
         return "home-page";
     }
 

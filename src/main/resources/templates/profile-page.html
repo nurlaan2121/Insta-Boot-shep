@@ -93,6 +93,8 @@
             color: #000;
             margin-bottom: 20px;
             text-align: center;
+            font-family: "Anton", sans-serif;
+            font-style: normal;
         }
 
         .menu-item {
@@ -300,8 +302,8 @@
                 </div>
                 <div class="stats">
                     <p> Posts: <span th:text="${currentUser.getPosts().size()}"></span></p>
-                    <p><a href="#"> Followers: <span th:text="${subscribers}"></span></a></p>
-                    <P><a href="#"> Following: <span th:text="${subscriptions}"></span></a></P>
+                    <p><a href="#" th:href="@{/home/subscribers/{userId}(userId=${userId})}"> Followers: <span th:text="${subscribers}"></span></a></p>
+                    <P><a href="#" th:href="@{/home/subscriptions/{userId}(userId=${userId})}"> Following: <span th:text="${subscriptions}"></span></a></P>
                 </div>
                 <p th:text="${currentUser.userInfo.fullName}"></p>
                 <p th:text="${currentUser.userInfo.biography}"></p>

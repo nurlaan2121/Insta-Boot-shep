@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.userName =:userName and u.password =:password")
     User findUserByNameAndPassword(String userName, String password);
 
+    @Query("select u from User u where u.id in :subscriptions")
+    List<User> subscriptionsOfUser(List<Long> subscriptions);
+
 }

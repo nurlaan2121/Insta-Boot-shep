@@ -72,4 +72,36 @@ public class MainApi {
         postService.getLikePost(userId, postId);
         return "redirect:/home/profUser/" + userId;
     }
+
+    @GetMapping("/subscribers/{userId}")
+    public String subscribers(@PathVariable Long userId, Model model){
+        List<User> users = userService.subscribersOfUser(userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("users", users);
+        return "subscribers-page";
+    }
+
+    @GetMapping("/subscriptions/{userId}")
+    public String subscriptions(@PathVariable Long userId, Model model){
+        List<User> users = userService.subscriptionsOfUser(userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("users", users);
+        return "subscriptions-page";
+    }
+
+    @GetMapping("/someUser/{userId}/{subId}")
+    public String someUser(@PathVariable Long userId,
+                           @PathVariable Long subId, Model model){
+       try {
+           User otherUser = userService.findOtherUserById(userId, subId);
+           List<Post> posts = otherUser.getPosts();
+           Collections.reverse(posts);
+           model.addAttribute("posts", posts);
+           model.addAttribute("currentUser", otherUser);
+           model.addAttribute("userId", userId);
+           return "other-page";
+       } catch (MyException e) {
+           return "redirect:/home/profUser/" + userId;
+       }
+    }
 }

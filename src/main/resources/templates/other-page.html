@@ -342,12 +342,6 @@
     </div>
 
     <main class="content" th:object="${currentUser}">
-        <form class="search-container" th:action="@{/search/mSearch/{userId}(userId=${userId})}" method="post">
-            <label for="keyword">Keyword:</label>
-            <input type="text" id="keyword" name="keyword" required>
-            <button type="submit">Search</button>
-        </form>
-
 
         <div class="user-profile">
             <img th:src="${currentUser.getUserInfo().getImage()}" alt="Profile Picture">
