@@ -56,6 +56,14 @@ public class PostApi {
         return "comment-page";
     }
 
+    @GetMapping("/comLike/{userId}/{postId}/{comId}")
+    public String commentLike(@PathVariable Long userId,
+                              @PathVariable Long postId,
+                              @PathVariable Long comId){
+        commentService.getCommentLike(userId, comId);
+        return "redirect:/posts/viewComment/"+ userId +"/"+ postId;
+    }
+
     @PostMapping("/savedComment/{userId}/{postId}")
     public String savedComment(@PathVariable Long postId,
                                @PathVariable Long userId,

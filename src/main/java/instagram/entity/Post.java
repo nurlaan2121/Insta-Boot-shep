@@ -36,7 +36,7 @@ public class Post {
     @OneToOne(cascade = {REMOVE, PERSIST, MERGE})
     private Like like;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = {REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
 

@@ -9,10 +9,12 @@ import instagram.repository.PostRepository;
 import instagram.repository.UserRepository;
 import instagram.service.CommentService;
 import instagram.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -27,6 +29,8 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new NoSuchElementException("Post not found"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
+        Like like = new Like();
+        comment.setLike(like);
         user.getComments().add(comment);
         comment.setUser(user);
         post.getComments().add(comment);
@@ -36,5 +40,19 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long comId) {
         commentRepository.deleteById(comId);
+    }
+
+    @Override
+    @Transactional
+    public void getCommentLike(Long userId, Long comId) {
+        Comment comment = commentRepository.findById(comId)
+                .orElseThrow(() -> new NoSuchElementException("Comment not found"));
+
+        List<Long> isLikes = comment.getLike().getComLikes();
+        if (isLikes.contains(userId)){
+            isLikes.remove(userId);
+        }else {
+            isLikes.add(userId);
+        }
     }
 }

@@ -58,6 +58,7 @@
         .like-btn i {
             margin-right: 5px;
         }
+
         .container {
             display: flex;
         }
@@ -257,6 +258,7 @@
             padding: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         /*.post {*/
         /*    width: 800px; !* Установка ширины поста *!*/
         /*    margin: 20px; !* Отступы между постами *!*/
@@ -324,8 +326,6 @@
         }
 
 
-
-
         .post {
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -355,7 +355,6 @@
         .like-btn i {
             margin-right: 5px;
         }
-
 
 
         .container {
@@ -417,7 +416,6 @@
         }
 
 
-
         /* Стили для каждого комментария */
         .container_coments p {
             margin: 0; /* Убираем отступы для абзацев в контейнере комментариев */
@@ -454,6 +452,11 @@
 
         .comment-submit:hover {
             background-color: #3578e5; /* Цвет кнопки при наведении */
+        }
+
+
+        .likess{
+            display: flex;
         }
 
 
@@ -501,10 +504,20 @@
                             <p th:text="${comment.comment}"></p>
                             <p class="comment-date" th:text="${comment.createAt}"></p>
 
-                            <form th:action="@{/posts/deleteComment/{userId}/{postId}/{comId}(userId=${userId},postId=${postId},comId=${comment.getId()})}"
-                                  th:method="get">
-                                <button type="submit" class="delete-comment-btn">Delete</button>
-                            </form>
+                            <div class="likess">
+                                <form th:action="@{/posts/deleteComment/{userId}/{postId}/{comId}(userId=${userId},postId=${postId},comId=${comment.getId()})}"
+                                      th:method="get">
+                                    <button type="submit" class="delete-comment-btn">Delete</button>
+                                </form>
+                                <form class="like-btn"
+                                      th:action="@{/posts/comLike/{userId}/{postId}/{comId}(userId=${userId},postId=${findPost.getId()},comId=${comment.getId()})}"
+                                      onclick="toggleLike(this)" th:method="get">
+                                    <button type="submit">
+                                        <i class="far fa-heart"></i>
+                                        <span class="like-count" th:text="${comment.like.comLikes.size()}"></span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <div th:unless="${comment.getUser().getId() == userId}" class="other-comment">
                             <h5 th:text="${comment.getUser().getUserName()}"></h5>
@@ -535,6 +548,32 @@
 
 <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+        let searchQuery = this.value.toLowerCase();
+        let searchResultsHTML = '';
+
+        // Пример результатов поиска
+        const users = [
+            {username: 'user1', photo: 'user1.jpg'},
+            {username: 'user2', photo: 'user2.jpg'},
+            {username: 'user3', photo: 'user3.jpg'}
+        ];
+
+        users.forEach(user => {
+            if (user.username.toLowerCase().includes(searchQuery)) {
+                searchResultsHTML += `<div><img src="${user.photo}" alt="${user.username}"><p>${user.username}</p></div>`;
+            }
+        });
+
+        document.getElementById('searchResults').innerHTML = searchResultsHTML;
+        document.getElementById('searchModal').style.display = 'block';
+    });
+
+    document.querySelector('.close').addEventListener('click', function () {
+        document.getElementById('searchModal').style.display = 'none';
+    });
 
 </script>
 </body>

@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "comments")
 @Getter
@@ -24,14 +26,14 @@ public class Comment{
     @Column(name = "create_at")
     private LocalDate createAt;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = DETACH)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = DETACH)
     private Post post;
 
-    @OneToMany
-    private List<Like> likes = new ArrayList<>();
+    @OneToOne(cascade = {REMOVE, PERSIST, MERGE})
+    private Like like;
 
     @PrePersist
     public void preSave(){

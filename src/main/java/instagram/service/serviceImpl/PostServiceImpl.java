@@ -58,7 +58,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public void getLikePost(Long currentUserId, Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow();
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NoSuchElementException("Post not found"));
 
         List<Long> isLikes = post.getLike().getIsLikes();
         if (isLikes.contains(currentUserId)){
