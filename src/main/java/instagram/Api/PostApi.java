@@ -37,6 +37,7 @@ public class PostApi {
                            @PathVariable Long userId,
                            HttpServletRequest request) {
         String[] imageURLs = request.getParameterValues("additionalImageUrls");
+
         if (imageURLs != null) {
             for (String imageURL : imageURLs) {
                 Image image = new Image();

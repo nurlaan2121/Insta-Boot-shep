@@ -25,4 +25,5 @@ public class Like {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> comLikes = new ArrayList<>();
+
 }
