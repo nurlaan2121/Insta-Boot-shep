@@ -109,4 +109,21 @@ public class MainApi {
            return "redirect:/home/profUser/" + userId;
        }
     }
+
+    @GetMapping("/someUserSubscriptions/{userId}/{otherUserId}")
+    public String otherUserSubscriptions(@PathVariable Long userId,
+                                         @PathVariable Long otherUserId, Model model){
+        List<User> users = userService.subscriptionsOfUser(otherUserId);
+        model.addAttribute("users", users);
+        model.addAttribute("userId", userId);
+        return "subscriptions-page";
+    }
+    @GetMapping("/someUserSubscribers/{userId}/{otherUserId}")
+    public String otherUserSubscribers(@PathVariable Long userId,
+                                       @PathVariable Long otherUserId, Model model){
+        List<User> users = userService.subscribersOfUser(otherUserId);
+        model.addAttribute("users", users);
+        model.addAttribute("userId", userId);
+        return "subscribers-page";
+    }
 }

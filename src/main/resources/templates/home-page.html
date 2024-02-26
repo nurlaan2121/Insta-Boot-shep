@@ -116,10 +116,11 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center; /* Центрирование по горизонтали */
+
         }
 
         .post {
-            width: 600px; /* Ширина поста */
+            /*width: 600px; !* Ширина поста *!*/
             margin: 10px auto; /* Отступы по верху и низу 10px, по бокам автоматически */
             padding: 10px; /* Внутренние отступы для поста */
             background-color: #fff; /* Цвет фона поста */
@@ -127,7 +128,8 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Тень для эффекта поднятия */
             text-align: center; /* Центрируем содержимое по горизонтали */
             margin-left: 20px; /* Добавляем отступ слева */
-
+            width: 450px;
+            height: auto;
             .userPost {
                 display: flex;
                 align-items: center;
@@ -182,6 +184,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             overflow: hidden;
+
         }
 
         .post img {
@@ -236,11 +239,15 @@
 
 
         .carousel-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px; /* Добавляет скругленные углы */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавляет тень */
-            margin: 10px; /* Добавляет отступы между изображениями */
+          img{
+              /*max-width: 100%;*/
+              /*height: auto;*/
+              /*width: 300px;*/
+
+              border-radius: 5px; /* Добавляет скругленные углы */
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавляет тень */
+              margin: 10px; /* Добавляет отступы между изображениями */
+          }
         }
 
         .carousel-control-prev-icon, .carousel-control-next-icon {

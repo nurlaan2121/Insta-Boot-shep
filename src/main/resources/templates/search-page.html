@@ -420,10 +420,8 @@
                     </div>
                     <div class="stats">
                         <p> Posts: <span th:text="${currentUser.getPosts().size()}"></span></p>
-                        <p><a href="#"> Followers: <span
-                                th:text="${currentUser.getFollower().getSubscribers().size()}"></span></a></p>
-                        <P><a href="#"> Following: <span
-                                th:text="${currentUser.getFollower().getSubscriptions().size()}"></span></a></P>
+                        <p><a href="#" th:href="@{/home/someUserSubscribers/{userId}/{curUserId}(userId=${userId},curUserId=${currentUser.getId()})}"> Followers: <span th:text="${currentUser.getFollower().getSubscribers().size()}"></span></a></p>
+                        <P><a href="#" th:href="@{/home/someUserSubscriptions/{userId}/{curUserId}(userId=${userId},curUserId=${currentUser.getId()})}"> Following: <span th:text="${currentUser.getFollower().getSubscriptions().size()}"></span></a></P>
                     </div>
                     <p th:text="${currentUser.userInfo.fullName}"></p>
                     <p th:text="${currentUser.userInfo.biography}"></p>

@@ -83,5 +83,6 @@ public class SearchApi {
         postService.getLikePost(userId, postId);
         return "redirect:/search/otherUser/" + userId + "/" + otherId;
     }
+
 }
 
