@@ -36,10 +36,7 @@ public class PostApi {
     public String savePost(@ModelAttribute("post") Post post,
                            @PathVariable Long userId,
                            HttpServletRequest request) {
-        // Получаем значения URL изображений из запроса
         String[] imageURLs = request.getParameterValues("additionalImageUrls");
-
-        // Добавляем URL изображений к посту
         if (imageURLs != null) {
             for (String imageURL : imageURLs) {
                 Image image = new Image();
@@ -47,8 +44,6 @@ public class PostApi {
                 post.getImages().add(image);
             }
         }
-
-        // Продолжаем сохранение поста и т.д.
         postService.createPost(userId, post);
         return "redirect:/home/profUser/" + userId;
     }
