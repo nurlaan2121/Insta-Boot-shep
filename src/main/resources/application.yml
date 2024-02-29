@@ -1,7 +1,7 @@
 spring:
     datasource:
-        password: rootroot
-        url: jdbc:postgresql://localhost:5432/insta_boot
+        password: nurlan21
+        url: jdbc:postgresql://localhost:5432/postgres
         username: postgres
     jpa:
         hibernate:

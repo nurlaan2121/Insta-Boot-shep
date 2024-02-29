@@ -82,23 +82,28 @@
             padding: 3px;
             background-color: #fff;
             /* width: 100%; */
+
             .logo {
                 padding-left: 90px;
             }
+
             .imgs {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 gap: 40px;
+
                 .userName {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    a{
+
+                    a {
                         text-decoration: none;
                     }
                 }
+
                 img {
                     width: 100px;
                     height: 85px;
@@ -130,6 +135,7 @@
             margin-left: 20px; /* Добавляем отступ слева */
             width: 450px;
             height: auto;
+
             .userPost {
                 display: flex;
                 align-items: center;
@@ -142,7 +148,8 @@
                     border: 3px solid #FD641D;
                     border-radius: 90%;
                 }
-                a{
+
+                a {
                     text-decoration: none;
                 }
             }
@@ -236,8 +243,6 @@
         }
 
 
-
-
         /*.carousel-item img {*/
         /*  img{*/
         /*      !*max-width: 100%;*!*/
@@ -268,7 +273,8 @@
                     th:src="${subscription.userInfo.image}"
                     alt="profile-photo"
             />
-            <a href="#" th:href="@{/home/someUser/{userId}/{subId}(userId=${userId},subId=${subscription.id})}"><span th:text="${subscription.userName}"></span></a>
+            <a href="#" th:href="@{/home/someUser/{userId}/{subId}(userId=${userId},subId=${subscription.id})}"><span
+                    th:text="${subscription.userName}"></span></a>
         </div>
     </div>
 </header>
@@ -290,7 +296,11 @@
                     >
                 </li>
                 <li class="menu-item">
-                    <a href="#"><i class="fa fa-envelope"></i> Messages</a>
+                    <a
+                            href="#"
+                            th:href="@{/chat/api/myChatHome/{userId}(userId=${userId})}"
+                    ><i class="fa fa-search"></i> Messages</a
+                    >
                 </li>
                 <li class="menu-item">
                     <a href="#" th:href="@{/posts/newPost/{userId}(userId=${userId})}"
@@ -318,19 +328,23 @@
                             th:src="${post.user.userInfo.image}"
                             alt=""
                     />
-                    <a th:href="@{/home/someUser/{userId}/{subId}(userId=${userId},subId=${post.user.id})}"><span th:text="${post.user.userName}"></span></a>
+                    <a th:href="@{/home/someUser/{userId}/{subId}(userId=${userId},subId=${post.user.id})}"><span
+                            th:text="${post.user.userName}"></span></a>
                 </div>
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" th:each="image, iterStat : ${post.images}" th:classappend="${iterStat.first} ? 'active' : ''">
+                        <div class="carousel-item active" th:each="image, iterStat : ${post.images}"
+                             th:classappend="${iterStat.first} ? 'active' : ''">
                             <img th:src="${image.imageURL}" class="d-block w-100" alt="image post">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>

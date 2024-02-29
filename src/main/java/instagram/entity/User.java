@@ -10,7 +10,8 @@ import static jakarta.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,4 +39,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {REMOVE})
     private List<Comment> comments = new ArrayList<>();
+
 }
